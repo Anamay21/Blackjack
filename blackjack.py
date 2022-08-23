@@ -12,6 +12,7 @@ points_dic = {
 	"7" : 7,
 	"8" : 8,
 	"9" : 9,
+	"10": 10,
 	"J" : 10,
 	"Q" : 10,
 	"K" : 10,
@@ -23,6 +24,7 @@ cpu = {}
 points = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "J", "Q", "K"]
 suits = ['diamonds', 'clubs', 'spades', 'hearts']
 
+# User's Total.
 def user_total():
 	ut = 0
 	for key in user:
@@ -30,6 +32,7 @@ def user_total():
 	#print(f"Your Total: {ut}")
 	return ut
 
+# Dealer's Total.
 def cpu_total():
 	ct = 0
 	for key in cpu:
@@ -37,6 +40,7 @@ def cpu_total():
 	#print(f"Dealer's Total: {ct}")
 	return ct
 
+# Decision Function to conclude the result.
 def decision():
 	user_final_total = user_total()
 	cpu_final_total = cpu_total()
@@ -87,19 +91,23 @@ def decision():
 os.system('clear')
 
 for deal in range(2):
+	# User's First Two Cards.
 	key = random.choice(points)
 	value = random.choice(suits)
 	user[key] = value
-
+	
+	# Dealer's First Two Cards.
 	key = random.choice(points)
 	value = random.choice(suits)
 	cpu[key] = value
 
+# Printing User's Cards.
 print("Your Cards: ")
 art_blackjack.card_print(user, False)
 print(f"Your Total: {user_total()}")
 print("")
 
+# Printing Dealer's Cards.
 print("Dealer's Cards: ")
 art_blackjack.card_print(cpu, True)
 print("")
@@ -110,6 +118,15 @@ while hit:
 	if hit_or_not == 'hit':
 		os.system('clear')
 		key = random.choice(points)
+		
+		# To check if card is repeated or not
+		if key in user:
+			key_found = True
+			while key_found:
+				key = random.choice(points)
+				if key not in user:
+					key_found = False
+
 		value = random.choice(suits)
 		user[key] = value
 	elif hit_or_not == 'stand':
@@ -131,9 +148,3 @@ while hit:
 	if hit == False:
 		decision()
 
-
-#print(user)
-#print(cpu)
-
-#art_blackjack.card_print(user, False)
-#art_blackjack.card_print(cpu, True)
